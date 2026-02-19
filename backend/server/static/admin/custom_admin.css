@@ -1,0 +1,18 @@
+/* Force full admin scroll fix */
+
+html, body {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+}
+
+/* Fix dashboard wrapper */
+body.dashboard,
+#container,
+.main,
+.content,
+#content {
+    height: auto !important;
+    min-height: 100vh !important;
+    overflow-y: auto !important;
+}

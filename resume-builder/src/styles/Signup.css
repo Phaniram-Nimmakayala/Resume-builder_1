@@ -1,0 +1,199 @@
+/* ============================= */
+/* Premium Signup Background */
+/* ============================= */
+
+.min-h-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background:
+    linear-gradient(rgba(20, 10, 40, 0.65), rgba(20, 10, 40, 0.65)),
+    url("../assets/signup-bg.png");
+
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  padding-top: 120px;
+  padding-bottom: 60px;
+}
+
+/* ============================= */
+/* Signup Card */
+/* ============================= */
+
+.signup-card {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  width: 100%;
+  max-width: 460px;
+
+  box-shadow:
+    0 25px 70px rgba(0, 0, 0, 0.25),
+    0 10px 30px rgba(124, 58, 237, 0.25);
+
+  transition: all 0.3s ease;
+}
+
+.signup-card:hover {
+  transform: translateY(-6px);
+}
+
+/* Top accent bar */
+.signup-accent {
+  height: 6px;
+  background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+  border-radius: 12px 12px 0 0;
+  margin-bottom: 25px;
+}
+
+/* ============================= */
+/* Typography */
+/* ============================= */
+
+.signup-card h2 {
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.signup-card p {
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+/* ============================= */
+/* Inputs */
+/* ============================= */
+
+.signup-input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.signup-input:focus {
+  border-color: #7c3aed;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.25);
+  transform: scale(1.02);
+}
+
+/* ============================= */
+/* Main Button */
+/* ============================= */
+
+.signup-btn {
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+  color: white;
+  padding: 14px;
+  border-radius: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+}
+
+.signup-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(124, 58, 237, 0.4);
+}
+
+/* ============================= */
+/* Google Button */
+/* ============================= */
+
+.google-btn {
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  border-radius: 10px;
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.google-btn:hover {
+  background: #f9fafb;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================= */
+/* Links */
+/* ============================= */
+
+.signup-card span {
+  transition: color 0.3s ease;
+}
+
+.signup-card span:hover {
+  color: #8b5cf6;
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-card {
+  background: white;
+  width: 400px;
+  max-width: 90%;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  animation: popIn 0.3s ease;
+}
+
+.modal-card.success .modal-icon {
+  background: #22c55e;
+  color: white !important;
+}
+
+.modal-card.error .modal-icon {
+  background: #ef4444;
+  color: white !important;
+}
+
+.modal-icon {
+  width: 80px;
+  height: 80px;
+  margin: -60px auto 20px auto;
+  border-radius: 50%;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-btn {
+  background: #7c3aed;
+  color: white;
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.modal-btn:hover {
+  background: #6d28d9;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

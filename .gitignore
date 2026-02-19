@@ -1,0 +1,30 @@
+# =========================
+# Python / Django
+# =========================
+venv/
+__pycache__/
+*.pyc
+db.sqlite3
+*.log
+
+# Django media
+media/
+
+# =========================
+# Node / React
+# =========================
+resume-builder/node_modules/
+resume-builder/dist/
+resume-builder/build/
+
+# =========================
+# Environment Variables
+# =========================
+.env
+
+# =========================
+# VS Code / OS
+# =========================
+.vscode/
+.DS_Store
+Thumbs.db

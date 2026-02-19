@@ -1,0 +1,207 @@
+/* ===== Layout ===== */
+.login-container {
+  min-height: 100vh;
+  display: flex;
+}
+
+/* LEFT SIDE BACKGROUND */
+.login-left {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-image: url("../assets/login-bg.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  position: relative;
+  overflow: hidden;
+}
+
+/* Decorative soft blur circle */
+.login-left::before {
+  content: "";
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: rgba(124, 58, 237, 0.25);
+  border-radius: 50%;
+  filter: blur(120px);
+  top: -100px;
+  left: -100px;
+  z-index: 0;
+}
+
+/* ===== RIGHT SIDE ===== */
+.login-right {
+  width: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: -20px 0 40px rgba(0, 0, 0, 0.15);
+}
+
+.login-right img {
+  max-width: 80%;
+  animation: float 5s ease-in-out infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+  100% { transform: translateY(0); }
+}
+
+/* ===== Glass Login Card ===== */
+.login-card {
+  position: relative;
+  z-index: 1;
+
+  background: rgba(255, 255, 255, 0.35);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    0 5px 15px rgba(124, 58, 237, 0.15);
+
+  transition: all 0.3s ease;
+}
+
+/* Slight hover lift */
+.login-card:hover {
+  transform: translateY(-5px);
+}
+
+/* ===== Popup ===== */
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 14px 22px;
+  border-radius: 8px;
+  font-weight: 500;
+  animation: slideIn 0.4s ease;
+  z-index: 1000;
+}
+
+.popup.success {
+  background: #22c55e;
+  color: white;
+}
+
+.popup.error {
+  background: #ef4444;
+  color: white;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ===== Center Modal Overlay ===== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+/* ===== Modal Card ===== */
+.modal-card {
+  background: white;
+  width: 400px;
+  max-width: 90%;
+  padding: 2rem;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+  animation: popIn 0.3s ease;
+}
+
+/* Success & Error Colors */
+.modal-card.success .modal-icon {
+  background: #22c55e;
+}
+
+.modal-card.error .modal-icon {
+  background: #ef4444;
+}
+
+/* Icon Circle */
+.modal-icon {
+  width: 80px;
+  height: 80px;
+  margin: -60px auto 20px auto;
+  border-radius: 50%;
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+    color: #ffffff !important;
+}
+
+.icon-symbol {
+  color: white !important;
+  font-weight: bold;
+}
+
+/* Title */
+.modal-card h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* Message */
+.modal-card p {
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* OK Button */
+.modal-btn {
+  background: #7c3aed;
+  color: white;
+  padding: 10px 28px;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.modal-btn:hover {
+  background: #6d28d9;
+  transform: translateY(-2px);
+}
+
+
+
+/* Animation */
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

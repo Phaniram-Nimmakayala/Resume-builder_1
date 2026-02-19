@@ -1,0 +1,36 @@
+@import "tailwindcss";
+
+/* Custom Animations */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideRight {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeSlideUp 0.9s ease-out forwards;
+}
+
+.animate-fade-right {
+  animation: fadeSlideRight 1s ease-out forwards;
+}
+
+.input {
+  @apply w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500;
+}

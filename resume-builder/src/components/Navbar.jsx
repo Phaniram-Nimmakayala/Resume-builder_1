@@ -1,0 +1,72 @@
+import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
+import logo from "../assets/logo.png"; // add your icon image here
+import "../styles/Navbar.css"; 
+
+const Navbar = () => {
+  const { user, logout } = useContext(AuthContext);
+
+  return (
+    <div className="navbar-wrapper">
+    <nav className="navbar">
+      <div className="max-w-7xl mx-auto px-8 py-3 flex items-center justify-between">
+
+        {/* LEFT: Brand */}
+        <div className="flex items-center gap-0 brand">
+          <img
+            src={logo}
+            alt="Smart Resume Builder"
+            className="w-13 h-13"
+          />
+          <span className="text-xl font-bold tracking-wide brand-text">
+            Instant Resume Builder
+          </span>
+        </div>
+
+        {/* CENTER: Navigation Links */}
+        <div className="hidden md:flex gap-8 font-medium">
+          <Link to="/" className="nav-link">Home</Link>
+          <Link to="/about" className="nav-link">About</Link>
+          <Link to="/build-resume" className="nav-link">Build Resume</Link>
+          <Link to="/resources" className="nav-link">Resources</Link>
+          <Link to="/contact" className="nav-link">Contact</Link>
+        </div>
+
+        {/* RIGHT: Auth Buttons */}
+        {!user ? (
+          <div className="flex gap-4">
+            <Link
+              to="/login"
+              className="px-4 py-2 rounded-full border btn-outline"
+            >
+              Login
+            </Link>
+            <Link
+              to="/signup"
+              className="px-4 py-2 rounded-full btn-solid"
+            >
+              Sign Up
+            </Link>
+          </div>
+        ) : (
+          <div className="flex items-center gap-4">
+            <span className="font-medium hello-text">
+              Hello, <span className="username">{user.first_name}</span>
+            </span>
+            <button
+              onClick={logout}
+              className="px-4 py-2 rounded-full btn-solid"
+            >
+              Logout
+            </button>
+          </div>
+        )}
+
+      </div>
+    </nav>
+  </div>
+  );
+};
+
+export default Navbar;
