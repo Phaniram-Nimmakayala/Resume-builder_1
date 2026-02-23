@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import logo from "../assets/logo.png"; // add your icon image here
@@ -6,6 +6,28 @@ import "../styles/Navbar.css";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
+
+  const navigate = useNavigate();
+const location = useLocation();
+
+const scrollToSection = (id) => {
+
+  // If user not on home page
+  if (location.pathname !== "/") {
+    navigate("/");
+
+    setTimeout(() => {
+      document.getElementById(id)?.scrollIntoView({
+        behavior: "smooth"
+      });
+    }, 200);
+  } 
+  else {
+    document.getElementById(id)?.scrollIntoView({
+      behavior: "smooth"
+    });
+  }
+};
 
   return (
     <div className="navbar-wrapper">
@@ -24,14 +46,41 @@ const Navbar = () => {
           </span>
         </div>
 
-        {/* CENTER: Navigation Links */}
         <div className="hidden md:flex gap-8 font-medium">
-          <Link to="/" className="nav-link">Home</Link>
-          <Link to="/about" className="nav-link">About</Link>
-          <Link to="/build-resume" className="nav-link">Build Resume</Link>
-          <Link to="/resources" className="nav-link">Resources</Link>
-          <Link to="/contact" className="nav-link">Contact</Link>
-        </div>
+
+  <span
+    className="nav-link cursor-pointer"
+    onClick={() => scrollToSection("home")}
+  >
+    Home
+  </span>
+
+  <span
+    className="nav-link cursor-pointer"
+    onClick={() => scrollToSection("about")}
+  >
+    About
+  </span>
+
+  {/* Future sections */}
+  {/* enable later when created */}
+
+  {/* 
+  <span onClick={() => scrollToSection("resources")}>
+    Resources
+  </span>
+
+  <span onClick={() => scrollToSection("contact")}>
+    Contact
+  </span>
+  */}
+
+  {/* REAL PAGE */}
+  <Link to="/build-resume" className="nav-link">
+    Build Resume
+  </Link>
+
+</div>
 
         {/* RIGHT: Auth Buttons */}
         {!user ? (

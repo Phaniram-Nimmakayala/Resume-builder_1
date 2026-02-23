@@ -34,3 +34,18 @@
 .input {
   @apply w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500;
 }
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 90px;
+}
+
+@media (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+  }
+}

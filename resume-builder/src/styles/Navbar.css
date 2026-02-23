@@ -142,3 +142,10 @@
   color: #7c3aed;
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+  }
+}

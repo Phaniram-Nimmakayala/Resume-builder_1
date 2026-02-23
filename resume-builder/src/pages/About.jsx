@@ -1,83 +1,121 @@
-import { useEffect, useState } from "react";
-import "../styles/About.css";
+import {
+  FaBolt,
+  FaFileAlt,
+  FaDownload,
+  FaUserCheck
+} from "react-icons/fa";
 import aboutImage from "../assets/illustration.png";
+import "../styles/About.css";
 
 const About = () => {
-  const [animate, setAnimate] = useState(false);
-
-  useEffect(() => {
-    setTimeout(() => setAnimate(true), 200);
-  }, []);
-
   return (
-    <section id="about" className="about-section">
+    <section className="about-section">
 
-      {/* ===== Feature Blocks ===== */}
-      <div className="features-grid">
-        {[
-          {
-            letter: "A",
-            title: "ATS Friendly Templates",
-            text: "Our resumes are designed to pass Applicant Tracking Systems and increase your chances of getting shortlisted."
-          },
-          {
-            letter: "B",
-            title: "Modern Designs",
-            text: "Choose from professionally crafted templates built with modern hiring trends in mind."
-          },
-          {
-            letter: "C",
-            title: "Powerful Customization",
-            text: "Edit sections, reorder content, and personalize your resume according to your career goals."
-          },
-          {
-            letter: "D",
-            title: "Instant Download",
-            text: "Download your resume instantly in PDF format and start applying for jobs immediately."
-          }
-        ].map((item, index) => (
-          <div key={index} className="feature-card">
-            <div className="feature-icon">{item.letter}</div>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </div>
-        ))}
-      </div>
+      {/* ===== TOP CONTENT ===== */}
+      <div className="about-container">
 
-      {/* ===== Welcome Section ===== */}
-      <div className="welcome-section">
+        {/* LEFT CONTENT */}
+        <div className="about-text reveal">
 
-        <div className={`welcome-left ${animate ? "slide-left" : ""}`}>
-          <img src={aboutImage} alt="Resume Builder Illustration" />
+          <h5>About Website</h5>
+
+          <h2>Our Resume Builder Journey</h2>
+
+          <p>
+            Our Instant Resume Builder is designed to simplify resume
+            creation for students, job seekers, and professionals.
+            With modern templates and intelligent customization,
+            users can quickly generate ATS-friendly resumes.
+          </p>
+
+          <p>
+            The platform focuses on speed, simplicity, and professional
+            design standards to help users present their skills effectively
+            and increase hiring opportunities across industries.
+          </p>
+
+          <p>
+            From beginners creating their first resume to experienced
+            professionals upgrading careers, our system provides an
+            effortless resume-building experience.
+          </p>
+
         </div>
 
-        <div className={`welcome-right ${animate ? "slide-right" : ""}`}>
-          <h2>Welcome to Instant Resume Builder</h2>
-          <p>
-            Instant Resume Builder helps students and professionals create 
-            high-quality resumes in minutes. Our platform simplifies resume 
-            creation while maintaining professional standards required by 
-            recruiters.
-          </p>
-          <p>
-            Whether you're a fresher or experienced candidate, our tools 
-            guide you step-by-step to build resumes that stand out and 
-            increase your hiring chances.
-          </p>
+        {/* RIGHT IMAGE */}
+        <div className="about-image reveal">
+          <img src={aboutImage} alt="Resume Builder" />
         </div>
 
       </div>
 
-      {/* ===== Testimonials ===== */}
-      <div className="testimonial-section">
-        <h2>Testimonials</h2>
-        <div className="testimonial-card">
-          <p>
-            “This resume builder helped me create a professional resume 
-            in just 15 minutes. I got interview calls within a week!”
-          </p>
-          <h4>— Satisfied User</h4>
-        </div>
+
+      {/* ===== FLIP CARDS ===== */}
+      <div className="about-cards">
+
+        <div className="flip-card">
+  <div className="flip-inner">
+
+    <div className="flip-front">
+  <FaBolt className="card-icon"/>
+  <h3>Easy Resume Creation</h3>
+</div>
+
+<div className="flip-back">
+  <p>Build resumes quickly with guided steps, making resume creation simple, fast, and professionally structured.
+</p>
+</div>
+
+  </div>
+</div>
+
+        <div className="flip-card">
+  <div className="flip-inner">
+
+    <div className="flip-front">
+  <FaFileAlt className="card-icon"/>
+  <h3>Modern Templates</h3>
+</div>
+
+<div className="flip-back">
+  <p>ATS-optimized professional layouts designed to enhance readability and present your resume in a clean structured format.
+</p>
+</div>
+
+  </div>
+</div>
+
+        <div className="flip-card">
+  <div className="flip-inner">
+
+    <div className="flip-front">
+  <FaDownload className="card-icon"/>
+  <h3>Fast Download</h3>
+</div>
+
+<div className="flip-back">
+  <p>Export resumes instantly as PDF format for quick downloading and maintaining a clean professional appearance across platforms.
+</p>
+</div>
+
+  </div>
+</div>
+        <div className="flip-card">
+  <div className="flip-inner">
+
+    <div className="flip-front">
+  <FaUserCheck className="card-icon"/>
+  <h3>User Friendly</h3>
+</div>
+
+<div className="flip-back">
+  <p>Simple experience for all users with an intuitive interface that makes resume building easy, smooth, and accessible for everyone.
+</p>
+</div>
+
+  </div>
+</div>
+
       </div>
 
     </section>
