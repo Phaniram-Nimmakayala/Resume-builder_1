@@ -5,10 +5,12 @@ import {
   FaUserCheck
 } from "react-icons/fa";
 import aboutImage from "../assets/illustration.png";
+import TemplateSlider from "../components/TemplateSlider";
 import "../styles/About.css";
 
 const About = () => {
   return (
+    <>
     <section className="about-section">
 
       {/* ===== TOP CONTENT ===== */}
@@ -119,6 +121,8 @@ const About = () => {
       </div>
 
     </section>
+     <TemplateSlider />
+     </>
   );
 };
 
