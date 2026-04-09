@@ -80,3 +80,213 @@
 .blue {
   background: linear-gradient(135deg,#3b82f6,#2563eb);
 }
+
+
+/* ===== Subtle Parallax Motion ===== */
+
+.template-slide {
+  position: relative;
+  overflow: hidden;
+}
+
+.template-slide::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: inherit;
+  transform: scale(1.1);
+  transition: transform 1s ease;
+  z-index: 0;
+}
+
+.slider-content {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.8s ease;
+}
+
+.slider-image img {
+  transition: transform 0.8s ease;
+}
+
+.template-slide:hover .slider-image img {
+  transform: scale(1.05);
+}
+
+
+
+
+
+
+
+/* ===============================
+   BASE IMPROVEMENTS
+================================= */
+
+.template-slider-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.slider-window {
+  overflow: hidden;
+}
+
+.slider-track {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+/* EACH SLIDE */
+.template-slide {
+  min-width: 100%;
+  padding: 60px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* CONTENT */
+.slider-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* TEXT */
+.slider-text {
+  flex: 1;
+}
+
+.slider-text h2 {
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.slider-text p {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #555;
+}
+
+/* IMAGE */
+.slider-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.slider-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+/* ARROWS */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 28px;
+  background: #7c3aed;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.arrow.left {
+  left: 20px;
+}
+
+.arrow.right {
+  right: 20px;
+}
+
+/* ===============================
+   TABLET RESPONSIVE
+================================= */
+@media (max-width: 1024px) {
+
+  .template-slide {
+    padding: 40px 40px;
+  }
+
+  .slider-text h2 {
+    font-size: 32px;
+  }
+
+  .slider-text p {
+    font-size: 16px;
+  }
+}
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================= */
+@media (max-width: 768px) {
+
+  .template-slide {
+    padding: 40px 20px;
+  }
+
+  .slider-content {
+    flex-direction: column; /* ✅ STACK */
+    text-align: center;
+    gap: 25px;
+  }
+
+  .slider-text h2 {
+    font-size: 24px;
+  }
+
+  .slider-text p {
+    font-size: 14px;
+  }
+
+  .slider-image img {
+    max-width: 280px;
+  }
+
+  /* SMALL ARROWS */
+  .arrow {
+    font-size: 20px;
+    padding: 6px 10px;
+  }
+
+  .arrow.left {
+    left: 10px;
+  }
+
+  .arrow.right {
+    right: 10px;
+  }
+}
+
+/* ===============================
+   SMALL MOBILE
+================================= */
+@media (max-width: 480px) {
+
+  .slider-text h2 {
+    font-size: 20px;
+  }
+
+  .slider-text p {
+    font-size: 13px;
+  }
+
+  .slider-image img {
+    max-width: 240px;
+  }
+
+  .arrow {
+    font-size: 18px;
+  }
+}

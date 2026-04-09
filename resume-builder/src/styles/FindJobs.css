@@ -1,0 +1,95 @@
+.find-jobs-page {
+  margin-top: 100px;
+  padding: 40px;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+/* TITLE */
+.fj-title {
+  font-size: 32px;
+  margin-bottom: 30px;
+  text-align: center;
+  color: #222;
+}
+
+/* UPLOAD BOX */
+.upload-card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 40px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+}
+
+.upload-card input {
+  margin-bottom: 15px;
+}
+
+.upload-card button {
+  background: #6c63ff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.upload-card button:hover {
+  background: #574fd6;
+}
+
+/* JOB GRID */
+.jobs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+/* JOB CARD */
+.job-card {
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: 0.3s;
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+}
+
+/* TEXT */
+.job-card h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.company {
+  font-weight: bold;
+  color: #555;
+}
+
+.location {
+  color: #777;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+/* APPLY BUTTON */
+.job-card a {
+  text-decoration: none;
+  color: white;
+  background: #28a745;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+.job-card a:hover {
+  background: #218838;
+}

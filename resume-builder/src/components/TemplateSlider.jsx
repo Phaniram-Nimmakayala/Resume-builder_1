@@ -45,7 +45,9 @@ export default function TemplateSlider() {
               key={i}
               className={`template-slide ${item.bg}`}
             >
-              <div className="slider-content">
+              <div className="slider-content" style={{
+    transform: `translateX(${index * 15}px)`,
+  }}>
 
                 <div className="slider-text">
                   <h2>{item.title}</h2>

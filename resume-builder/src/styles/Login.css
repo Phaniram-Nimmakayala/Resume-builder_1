@@ -4,6 +4,7 @@
   display: flex;
 }
 
+
 /* LEFT SIDE BACKGROUND */
 .login-left {
   width: 50%;
@@ -57,6 +58,7 @@
 
 /* ===== Glass Login Card ===== */
 .login-card {
+  .login-card {
   position: relative;
   z-index: 1;
 
@@ -66,8 +68,10 @@
 
   border: 1px solid rgba(255, 255, 255, 0.4);
   padding: 2.5rem;
+
   width: 100%;
-  max-width: 420px;
+  max-width: 580px;   /* 🔥 increased */
+
   border-radius: 20px;
 
   box-shadow:
@@ -75,6 +79,7 @@
     0 5px 15px rgba(124, 58, 237, 0.15);
 
   transition: all 0.3s ease;
+}
 }
 
 /* Slight hover lift */

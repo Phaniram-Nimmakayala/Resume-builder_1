@@ -2,12 +2,14 @@
   "name": "resume-builder",
   "private": true,
   "version": "0.0.0",
+  "homepage": "https://Phaniram-Nimmakayala.github.io/Resume-builder_1",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
+  "build": "vite build",
+  "preview": "vite preview",
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.18",
@@ -15,7 +17,6 @@
     "jwt-decode": "^4.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-icons": "^5.5.0",
     "react-router-dom": "^7.13.0",
     "react-tsparticles": "^2.12.2",
     "tailwindcss": "^4.1.18",

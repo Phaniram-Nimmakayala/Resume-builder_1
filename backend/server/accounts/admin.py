@@ -1,8 +1,12 @@
 from django.contrib import admin
 from .models import User
+from .models import ContactMessage
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
     list_display = ("email", "mobile", "is_staff", "is_active", "created_at")
     search_fields = ("email", "mobile")
     ordering = ("-created_at",)
+
+
+admin.site.register(ContactMessage)

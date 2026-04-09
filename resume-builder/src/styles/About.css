@@ -189,3 +189,135 @@
     width: 100%;
   }
 }
+
+
+
+
+/* ===============================
+   BASE IMPROVEMENTS
+================================= */
+
+.about-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+}
+
+.about-text {
+  flex: 1;
+}
+
+.about-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.about-image img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* CARDS GRID */
+.about-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 50px;
+}
+
+/* ===============================
+   TABLET RESPONSIVE
+================================= */
+@media (max-width: 1024px) {
+
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-text {
+    max-width: 700px;
+  }
+
+  .about-image img {
+    max-width: 400px;
+  }
+
+  .about-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
+/* ===============================
+   MOBILE RESPONSIVE
+================================= */
+@media (max-width: 768px) {
+
+  .about-section {
+    padding: 60px 20px;
+  }
+
+  .about-container {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .about-text h2 {
+    font-size: 26px;
+  }
+
+  .about-text p {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .about-image img {
+    max-width: 300px;
+  }
+
+}
+
+/* ===============================
+   SMALL MOBILE
+================================= */
+@media (max-width: 480px) {
+
+  .about-text h2 {
+    font-size: 22px;
+  }
+
+  .about-text p {
+    font-size: 13px;
+  }
+
+  .about-image img {
+    max-width: 250px;
+  }
+
+  .flip-card {
+    height: 160px;
+  }
+}
+
+
+/* ===============================
+   MOBILE RESPONSIVE (CENTER CARDS)
+================================= */
+@media (max-width: 768px) {
+
+  .about-cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* ✅ CENTER ALL CARDS */
+    gap: 20px;
+  }
+
+  .flip-card {
+    width: 90%;            /* ✅ NOT FULL WIDTH */
+    max-width: 320px;      /* ✅ PERFECT CARD SIZE */
+    height: 180px;
+  }
+}

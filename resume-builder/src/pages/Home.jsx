@@ -3,6 +3,8 @@ import bgImage from "../assets/home-bg.png";
 import "../styles/Home.css";
 
 import About from "./About";
+import BuildResume from "./BuildResume";
+import Contact from "./Contact";
 
 export default function Home() {
 
@@ -88,6 +90,16 @@ useEffect(() => {
       <section id="about" className="reveal">
         <About />
       </section>
+
+      {/* BUILD RESUME CONTINUATION */}
+  <section id="build-resume" className="reveal">
+    <BuildResume />
+  </section>
+
+  {/* CONTACT SECTION */}
+<section id="contact" className="reveal">
+  <Contact />
+</section>
     </>
   );
 }

@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from datetime import timedelta
+import os
+
+os.environ["OPENAI_API_KEY"] = "your-api-key-here"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -153,3 +156,6 @@ CORS_ALLOW_HEADERS = [
     'authorization',
     'content-type',
 ]
+
+
+GEMINI_API_KEY = "your_api_key_here"

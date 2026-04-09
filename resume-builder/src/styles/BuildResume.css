@@ -1,0 +1,86 @@
+.build-page {
+  min-height: 100vh;
+  padding: 120px 60px;
+  background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+}
+
+.build-container {
+  max-width: 1200px;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 60px;
+
+  background: white;
+  padding: 60px;
+  border-radius: 24px;
+
+  box-shadow: 0 25px 60px rgba(0,0,0,0.08);
+  transition: transform 0.4s ease;
+}
+
+.build-container:hover {
+  transform: translateY(-6px);
+}
+
+.build-text {
+  flex: 1;
+}
+
+.build-btn {
+  padding: 16px 40px;
+  background: linear-gradient(135deg,#7c3aed,#9333ea);
+  color: white;
+  font-weight: 600;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 15px 35px rgba(124,58,237,0.35);
+}
+
+.build-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 20px 45px rgba(124,58,237,0.5);
+}
+
+.build-image {
+  flex: 1;
+  text-align: center;
+}
+
+.build-image img {
+  width: 420px;
+  transition: transform 0.4s ease;
+}
+
+.build-container:hover .build-image img {
+  transform: scale(1.05);
+}
+
+
+.login-popup{
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #7c3aed;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-weight: 500;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  animation: popupFade 0.3s ease;
+}
+
+@keyframes popupFade{
+  from{
+    opacity:0;
+    transform: translate(-50%,20px);
+  }
+  to{
+    opacity:1;
+    transform: translate(-50%,0);
+  }
+}
