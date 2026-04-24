@@ -1,292 +1,197 @@
-/* WRAPPER */
-.template-slider-wrapper {
-  position: relative;
-  overflow: hidden;
-  margin-top: 100px;
-}
-
-/* VIEWPORT */
-.slider-window {
-  overflow: hidden;
-  width: 100%;
-}
-
-/* TRACK (MOVES) */
-.slider-track {
-  display: flex;
-  transition: transform 0.8s ease-in-out;
-  will-change: transform;
-}
-
-/* EACH SLIDE */
-.template-slide {
-  min-width: 100%;
-  padding: 80px 60px;
-}
-
-/* CONTENT */
-.slider-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* TEXT */
-.slider-text {
-  color: white;
-  max-width: 500px;
-}
-
-.slider-text h2 {
-  font-size: 42px;
-}
-
-/* IMAGE */
-.slider-image img {
-  width: 420px;
-}
-
-/* ARROWS */
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-
-  background: rgba(255,255,255,0.4);
-  border: none;
-  font-size: 28px;
-  padding: 10px 18px;
-  cursor: pointer;
-  border-radius: 50%;
-}
-
-.left { left: 20px; }
-.right { right: 20px; }
-
-/* GRADIENT THEMES */
-.purple {
-  background: linear-gradient(135deg,#7c3aed,#9333ea);
-}
-
-.red {
-  background: linear-gradient(135deg,#ef4444,#dc2626);
-}
-
-.green {
-  background: linear-gradient(135deg,#22c55e,#16a34a);
-}
-
-.blue {
-  background: linear-gradient(135deg,#3b82f6,#2563eb);
-}
-
-
-/* ===== Subtle Parallax Motion ===== */
-
-.template-slide {
-  position: relative;
-  overflow: hidden;
-}
-
-.template-slide::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: inherit;
-  transform: scale(1.1);
-  transition: transform 1s ease;
-  z-index: 0;
-}
-
-.slider-content {
-  position: relative;
-  z-index: 1;
-  transition: transform 0.8s ease;
-}
-
-.slider-image img {
-  transition: transform 0.8s ease;
-}
-
-.template-slide:hover .slider-image img {
-  transform: scale(1.05);
-}
-
-
-
-
-
-
-
-/* ===============================
-   BASE IMPROVEMENTS
-================================= */
-
-.template-slider-wrapper {
-  position: relative;
-  width: 100%;
-  overflow: hidden;
-}
-
-.slider-window {
-  overflow: hidden;
+/* ============================================
+   PREMIUM VARIABLES & TRANSITIONS
+============================================ */
+:root {
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --slide-duration: 5500ms;
 }
 
 .slider-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.85s var(--ease-out-expo);
 }
 
-/* EACH SLIDE */
-.template-slide {
-  min-width: 100%;
-  padding: 60px 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* ============================================
+   ANIMATED PROGRESS BAR
+============================================ */
+.progress-fill {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0.95));
+  animation: progressGrow var(--slide-duration) linear forwards;
 }
 
-/* CONTENT */
-.slider-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  width: 100%;
-  max-width: 1200px;
+.is-paused .progress-fill {
+  animation-play-state: paused;
 }
 
-/* TEXT */
-.slider-text {
-  flex: 1;
+@keyframes progressGrow {
+  from { width: 0%; }
+  to { width: 100%; }
 }
 
-.slider-text h2 {
-  font-size: 40px;
-  font-weight: 700;
-}
-
-.slider-text p {
-  margin-top: 15px;
-  font-size: 18px;
-  color: #555;
-}
-
-/* IMAGE */
-.slider-image {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-}
-
-.slider-image img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 12px;
-}
-
-/* ARROWS */
-.arrow {
+/* ============================================
+   AMBIENT ORBs
+============================================ */
+.orb {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 28px;
-  background: #7c3aed;
-  color: white;
-  border: none;
-  padding: 10px 16px;
   border-radius: 50%;
-  cursor: pointer;
-  z-index: 10;
+  filter: blur(80px);
+  opacity: 0.2;
+  animation: orbFloat 20s ease-in-out infinite;
 }
 
-.arrow.left {
-  left: 20px;
+.orb-1 { width: 400px; height: 400px; background: #7c3aed; top: -10%; right: -5%; }
+.orb-2 { width: 300px; height: 300px; background: #2563eb; bottom: -10%; left: -5%; animation-delay: -7s; }
+.orb-3 { width: 250px; height: 250px; background: #dc2626; top: 40%; left: 40%; animation-delay: -14s; }
+
+@keyframes orbFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -40px) scale(1.1); }
+  66% { transform: translate(-20px, 20px) scale(0.95); }
 }
 
-.arrow.right {
-  right: 20px;
+/* ============================================
+   MESH GRADIENT BACKGROUNDS
+============================================ */
+.slide-purple {
+  --glow-color: rgba(167, 139, 250, 0.3);
+  background: radial-gradient(ellipse at 15% 80%, rgba(109, 40, 217, 0.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 85% 15%, rgba(168, 85, 247, 0.4) 0%, transparent 45%),
+    linear-gradient(160deg, #1e0a3c 0%, #3b0764 40%, #7c3aed 100%);
+}
+.slide-red {
+  --glow-color: rgba(252, 165, 165, 0.3);
+  background: radial-gradient(ellipse at 80% 80%, rgba(153, 27, 27, 0.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 25%, rgba(248, 113, 113, 0.4) 0%, transparent 45%),
+    linear-gradient(160deg, #2a0505 0%, #7f1d1d 40%, #dc2626 100%);
+}
+.slide-green {
+  --glow-color: rgba(134, 239, 172, 0.3);
+  background: radial-gradient(ellipse at 70% 80%, rgba(21, 128, 61, 0.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 25% 15%, rgba(74, 222, 128, 0.4) 0%, transparent 45%),
+    linear-gradient(160deg, #022c22 0%, #14532d 40%, #16a34a 100%);
+}
+.slide-blue {
+  --glow-color: rgba(147, 197, 253, 0.3);
+  background: radial-gradient(ellipse at 80% 70%, rgba(29, 78, 216, 0.6) 0%, transparent 50%),
+    radial-gradient(ellipse at 15% 30%, rgba(96, 165, 250, 0.4) 0%, transparent 45%),
+    linear-gradient(160deg, #0a1628 0%, #1e3a5f 40%, #2563eb 100%);
 }
 
-/* ===============================
-   TABLET RESPONSIVE
-================================= */
-@media (max-width: 1024px) {
-
-  .template-slide {
-    padding: 40px 40px;
-  }
-
-  .slider-text h2 {
-    font-size: 32px;
-  }
-
-  .slider-text p {
-    font-size: 16px;
-  }
+/* ============================================
+   FILM GRAIN NOISE TEXTURE
+============================================ */
+.slide-noise {
+  background-image: repeating-conic-gradient(rgba(255, 255, 255, 0.015) 0% 25%, transparent 0% 50%);
+  background-size: 4px 4px;
 }
 
-/* ===============================
-   MOBILE RESPONSIVE
-================================= */
-@media (max-width: 768px) {
+/* ============================================
+   FLOATING GEOMETRIC SHAPES
+============================================ */
+.fshape { position: absolute; }
 
-  .template-slide {
-    padding: 40px 20px;
-  }
+.fshape.ring {
+  width: 90px; height: 90px; border: 1.5px solid rgba(255, 255, 255, 0.08);
+  border-radius: 50%; top: 18%; right: 18%; animation: shapeFloat 14s ease-in-out infinite;
+}
+.fshape.ring-sm {
+  width: 40px; height: 40px; border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 50%; bottom: 25%; right: 35%; animation: shapeFloat 10s ease-in-out infinite reverse;
+}
+.fshape.dots-grid {
+  width: 50px; height: 50px; bottom: 22%; left: 8%;
+  background-image: radial-gradient(circle 1.5px, rgba(255, 255, 255, 0.12) 100%, transparent 100%);
+  background-size: 10px 10px; animation: shapeFloat 12s ease-in-out infinite; animation-delay: -3s;
+}
+.fshape.plus {
+  width: 24px; height: 24px; top: 55%; right: 22%; animation: shapeRotate 18s linear infinite;
+}
+.fshape.plus::before, .fshape.plus::after {
+  content: ""; position: absolute; background: rgba(255, 255, 255, 0.1); border-radius: 1px;
+}
+.fshape.plus::before { width: 100%; height: 1.5px; top: 50%; left: 0; transform: translateY(-50%); }
+.fshape.plus::after { width: 1.5px; height: 100%; left: 50%; top: 0; transform: translateX(-50%); }
 
-  .slider-content {
-    flex-direction: column; /* ✅ STACK */
-    text-align: center;
-    gap: 25px;
-  }
-
-  .slider-text h2 {
-    font-size: 24px;
-  }
-
-  .slider-text p {
-    font-size: 14px;
-  }
-
-  .slider-image img {
-    max-width: 280px;
-  }
-
-  /* SMALL ARROWS */
-  .arrow {
-    font-size: 20px;
-    padding: 6px 10px;
-  }
-
-  .arrow.left {
-    left: 10px;
-  }
-
-  .arrow.right {
-    right: 10px;
-  }
+.fshape.semi-circle {
+  width: 60px; height: 30px; border: 1.5px solid rgba(255, 255, 255, 0.06);
+  border-radius: 60px 60px 0 0; border-bottom: none; top: 15%; left: 12%;
+  animation: shapeFloat 16s ease-in-out infinite; animation-delay: -6s;
 }
 
-/* ===============================
-   SMALL MOBILE
-================================= */
-@media (max-width: 480px) {
+@keyframes shapeFloat {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-18px) rotate(3deg); }
+  66% { transform: translateY(12px) rotate(-2deg); }
+}
+@keyframes shapeRotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-  .slider-text h2 {
-    font-size: 20px;
-  }
+/* ============================================
+   CONTENT ENTRANCE ANIMATION
+============================================ */
+.slide-inner {
+  opacity: 0;
+  transform: translateY(20px) scale(0.99);
+  transition: opacity 0.8s var(--ease-out-expo) 0.1s, transform 0.8s var(--ease-out-expo) 0.1s;
+}
+.template-slide.active .slide-inner {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
 
-  .slider-text p {
-    font-size: 13px;
-  }
+/* ============================================
+   IMAGE PREMIUM EFFECTS
+============================================ */
+.img-glow {
+  background: radial-gradient(ellipse at center, var(--glow-color), transparent 55%);
+  opacity: 0.6;
+  animation: glowPulse 4s ease-in-out infinite alternate;
+}
 
-  .slider-image img {
-    max-width: 240px;
-  }
+@keyframes glowPulse {
+  from { opacity: 0.5; transform: translate(-50%, -50%) scale(0.95); }
+  to { opacity: 0.8; transform: translate(-50%, -50%) scale(1.05); }
+}
 
-  .arrow {
-    font-size: 18px;
-  }
+.img-shadow-custom {
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1), 0 0 80px -20px var(--glow-color);
+}
+
+.img-shine {
+  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.1) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.8s ease;
+}
+/* Triggered via Tailwind hover on parent, but we define the sweep here */
+.group:hover .img-shine, 
+.img-shadow-custom:hover .img-shine {
+  transform: translateX(100%);
+}
+
+/* ============================================
+   ARROW BUTTONS
+============================================ */
+.arrow-btn {
+  position: absolute; top: 50%; transform: translateY(-50%); z-index: 30;
+  width: 54px; height: 54px; border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+  color: rgba(255, 255, 255, 0.8); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.35s var(--ease-out-expo);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+.arrow-btn:hover {
+  background: rgba(255, 255, 255, 0.15); border-color: rgba(255, 255, 255, 0.3); color: #fff;
+  transform: translateY(-50%) scale(1.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3), 0 0 40px rgba(255, 255, 255, 0.06);
+}
+.arrow-btn:active { transform: translateY(-50%) scale(0.96); transition-duration: 0.1s; }
+
+/* ============================================
+   ACCESSIBILITY - REDUCED MOTION
+============================================ */
+@media (prefers-reduced-motion: reduce) {
+  .slider-track, .slide-inner, .img-shadow-custom, .arrow-btn { transition-duration: 0.01s !important; }
+  .orb, .fshape, .img-glow, .progress-fill { animation: none !important; }
+  .img-shine { display: none; }
 }

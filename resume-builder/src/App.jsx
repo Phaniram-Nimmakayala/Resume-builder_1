@@ -1,5 +1,5 @@
 import './App.css'
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Home from './pages/Home';
@@ -12,39 +12,32 @@ import FindJobs from "./pages/FindJobs";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminLogin from "./pages/AdminLogin";
 import AIInterview from "./pages/AIInterview";
-
+import Footer from "./components/Footer";
 
 import { AuthProvider } from "./context/AuthContext";
 
 function App() {
-
   return (
     <AuthProvider>
-      <BrowserRouter>
 
-        {/* Navbar Always Visible */}
-        <Navbar />
+      {/* Navbar Always Visible */}
+      <Navbar />
 
-        <Routes>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/resume-options" element={<ResumeOptions />} />
+        <Route path="/edit-resume" element={<EditResume />} />
+        <Route path="/create-resume" element={<CreateResume />} />
+        <Route path="/find-jobs" element={<FindJobs />} />
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/ai-interview" element={<AIInterview />} />
+      </Routes>
 
-          {/* Landing Scroll Page */}
-          <Route path="/" element={<Home />} />
+       <Footer />
 
-          {/* Authentication Pages */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/resume-options" element={<ResumeOptions />} />
-           <Route path="/edit-resume" element={<EditResume />} />
-           <Route path="/create-resume" element={<CreateResume />} />
-           <Route path="/find-jobs" element={<FindJobs />} />
-
-           <Route path="/admin-dashboard" element={<AdminDashboard />} />
-           <Route path="/admin-login" element={<AdminLogin />} />
-           <Route path="/ai-interview" element={<AIInterview />} />
-
-        </Routes>
-
-      </BrowserRouter>
     </AuthProvider>
   );
 }

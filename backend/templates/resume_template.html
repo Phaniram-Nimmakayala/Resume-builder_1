@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume</title>
+  <style>
+    /* Reset and Print Basics */
+    @page { size: A4; margin: 0; }
+    body { 
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+      margin: 0; 
+      padding: 0; 
+      background: white; 
+      -webkit-print-color-adjust: exact; 
+      print-color-adjust: exact; 
+    }
+    
+    .rb-paper { width: 100%; min-height: 297mm; display: block; background: white; }
+    
+    /* HEADER - Increased explicit height and padding */
+    .rb-paper-header { 
+      background-color: #2c3e50 !important; 
+      color: white !important; 
+      padding: 40px; 
+      text-align: center; 
+      border-bottom: 5px solid #3498db; 
+    }
+    .rb-paper-name { margin: 0; font-size: 26pt; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; color: white !important; }
+    .rb-paper-role { margin: 10px 0; font-weight: 300; font-size: 14pt; opacity: 0.9; color: #ecf0f1 !important; }
+    
+    /* CONTACT SECTION - Using display: block for PDF stability */
+    .rb-paper-contact { margin-top: 15px; font-size: 10pt; color: #ecf0f1 !important; text-align: center; }
+    .rb-paper-contact span { display: inline-block; padding: 0 10px; border-right: 1px solid #95a5a6; }
+    .rb-paper-contact span:last-child { border-right: none; }
+
+    /* BODY LAYOUT - Using Table for consistent PDF columns */
+    .rb-layout-table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .rb-paper-sidebar { 
+      width: 30%; 
+      background-color: #f8f9fa !important; 
+      padding: 30px 20px; 
+      vertical-align: top;
+      border-right: 1px solid #e0e0e0;
+    }
+    .rb-paper-main { 
+      width: 70%; 
+      padding: 30px 40px; 
+      vertical-align: top;
+    }
+    
+    /* BLOCK STYLES */
+    .rb-section-block { margin-bottom: 25px; width: 100%; }
+    .rb-side-title { font-size: 11pt; text-transform: uppercase; color: #2c3e50 !important; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-bottom: 10px; font-weight: bold; }
+    .rb-side-text { font-size: 10pt; color: #555; line-height: 1.4; margin: 0; }
+    
+    .rb-list { list-style: none; padding: 0; margin: 0; }
+    .rb-list li { padding-left: 12px; margin-bottom: 5px; font-size: 9.5pt; color: #444; position: relative; }
+    /* Manual bullet for PDF engines that skip pseudo-elements */
+    .rb-bullet { color: #3498db; font-weight: bold; margin-right: 5px; }
+
+    .rb-main-title { font-size: 12pt; text-transform: uppercase; color: #2c3e50 !important; border-bottom: 2px solid #3498db; padding-bottom: 5px; margin-bottom: 15px; font-weight: bold; }
+    .rb-text-body { font-size: 10pt; color: #444; line-height: 1.5; white-space: pre-line; margin: 0; }
+    
+    /* ENTRIES - Explicit positioning for date/title */
+    .rb-entry { margin-bottom: 18px; width: 100%; }
+    .rb-entry-header { width: 100%; margin-bottom: 2px; }
+    .rb-entry-title { float: left; font-size: 11pt; color: #2c3e50 !important; font-weight: bold; width: 70%; }
+    .rb-entry-date { float: right; font-size: 10pt; color: #7f8c8d !important; text-align: right; width: 30%; }
+    .rb-clearfix { clear: both; }
+    
+    .rb-entry-sub { font-size: 10pt; font-style: italic; color: #555; margin-bottom: 4px; display: block; }
+    .rb-entry-sub.tech { color: #3498db !important; font-style: normal; font-weight: 500; }
+  </style>
+</head>
+<body>
+
+  <div class="rb-paper">
+    <div class="rb-paper-header">
+      <h1 class="rb-paper-name">{{ data.name|default:"Your Name" }}</h1>
+      {% if data.role %}<h2 class="rb-paper-role">{{ data.role }}</h2>{% endif %}
+      <div class="rb-paper-contact">
+        {% if data.phone %}<span>{{ data.phone }}</span>{% endif %}
+        {% if data.email %}<span>{{ data.email }}</span>{% endif %}
+        {% if data.linkedin %}<span>LinkedIn</span>{% endif %}
+        {% if data.github %}<span>GitHub</span>{% endif %}
+      </div>
+    </div>
+
+    <table class="rb-layout-table">
+      <tr>
+        <td class="rb-paper-sidebar">
+          {% if data.address %}
+          <div class="rb-section-block">
+            <h4 class="rb-side-title">ADDRESS</h4>
+            <p class="rb-side-text">{{ data.address }}</p>
+          </div>
+          {% endif %}
+
+          {% if data.languages %}
+          <div class="rb-section-block">
+            <h4 class="rb-side-title">LANGUAGES</h4>
+            <ul class="rb-list">
+              {% for item in data.languages %}<li><span class="rb-bullet">•</span>{{ item }}</li>{% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+
+          {% if data.skills %}
+          <div class="rb-section-block">
+            <h4 class="rb-side-title">SKILLS</h4>
+            <ul class="rb-list">
+              {% for item in data.skills %}<li><span class="rb-bullet">•</span>{{ item }}</li>{% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+          
+          {% if data.hobbies %}
+          <div class="rb-section-block">
+            <h4 class="rb-side-title">HOBBIES</h4>
+            <ul class="rb-list">
+              {% for item in data.hobbies %}<li><span class="rb-bullet">•</span>{{ item }}</li>{% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </td>
+
+        <td class="rb-paper-main">
+  
+  {% if data.summary %}
+  <div class="rb-content-block">
+    <h3 class="rb-main-title">CAREER OBJECTIVE</h3>
+    <p class="rb-text-body">{{ data.summary }}</p>
+  </div>
+  {% endif %}
+
+  {% if data.education %}
+  <div class="rb-content-block">
+    <h3 class="rb-main-title">EDUCATION</h3>
+    {% for edu in data.education %}
+    <div class="rb-entry">
+      <div class="rb-entry-header">
+        <div class="rb-entry-title">{{ edu.degree|default:"" }}</div>
+        <div class="rb-entry-date">{{ edu.year|default:"" }}</div>
+        <div class="rb-clearfix"></div>
+      </div>
+      <div class="rb-entry-sub">{{ edu.institution|default:"" }}</div>
+      {% if edu.score %}
+        <div class="rb-entry-sub">Score: {{ edu.score }}</div>
+      {% endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if data.experience %}
+  <div class="rb-content-block">
+    <h3 class="rb-main-title">EXPERIENCE</h3>
+    {% for exp in data.experience %}
+    <div class="rb-entry">
+      <div class="rb-entry-header">
+        <div class="rb-entry-title">{{ exp.role|default:"" }}</div>
+        <div class="rb-entry-date">{{ exp.duration|default:"" }}</div>
+        <div class="rb-clearfix"></div>
+      </div>
+      <div class="rb-entry-sub">{{ exp.company|default:"" }}</div>
+      <p class="rb-text-body" style="font-size: 9pt; margin-top: 5px;">{{ exp.description|default:"" }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  </td>
+
+          {% if data.projects %}
+          <div class="rb-content-block">
+            <h3 class="rb-main-title">PROJECTS</h3>
+            {% for proj in data.projects %}
+            <div class="rb-entry">
+              <div class="rb-entry-title" style="width:100%">{{ proj.title }}</div>
+              <div class="rb-clearfix"></div>
+              <div class="rb-entry-sub tech">{{ proj.tech }}</div>
+              <p class="rb-text-body" style="font-size: 9pt; margin-top: 5px;">{{ proj.description }}</p>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

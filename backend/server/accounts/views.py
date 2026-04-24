@@ -8,11 +8,9 @@ from .serializers import CustomTokenObtainPairSerializer
 import pdfplumber
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from reportlab.pdfgen import canvas
 from django.http import HttpResponse
 import io
-from pdfminer.high_level import extract_text
-import pdfkit
+import os
 import re
 import requests
 from rest_framework.views import APIView
@@ -24,6 +22,10 @@ import google.generativeai as genai
 from django.conf import settings
 from openai import OpenAI
 import json
+from django.template.loader import render_to_string
+from weasyprint import HTML
+from django.views.decorators.csrf import csrf_exempt
+from django.utils.decorators import method_decorator
 
 
 from .serializers import RegisterSerializer
@@ -273,222 +275,8 @@ class UploadResumeView(APIView):
             return Response({"error": str(e)}, status=500)
         
 
-
-    
-
-config = pdfkit.configuration(
-    wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
-)
-
-
-class GenerateResumeView(APIView):
-
-    def post(self, request):
-        data = request.data.get("data", {})
-
-        # ✅ EDUCATION
-        education_html = ""
-        edu = data.get("education", [])
-        for i in range(0, len(edu), 3):
-            title = edu[i] if i < len(edu) else ""
-            sub = edu[i+1] if i+1 < len(edu) else ""
-            extra = edu[i+2] if i+2 < len(edu) else ""
-
-            education_html += f"""
-            <p class="title">{title}</p>
-            <p class="sub">{sub}</p>
-            <p class="sub">{extra}</p>
-            """
-
-        # ✅ EXPERIENCE
-        exp_html = ""
-        for e in data.get("experience", []):
-            if any(x in e.lower() for x in ["intern", "company", "tech"]):
-                exp_html += f'<p class="title">{e}</p>'
-            else:
-                exp_html += f'<p class="sub">{e}</p>'
-
-        # ✅ PROJECTS
-        proj_html = ""
-        for p in data.get("projects", []):
-            if "(" in p:
-                proj_html += f'<p class="title">{p}</p>'
-            else:
-                proj_html += f'<p class="sub">{p}</p>'
-
-        # ✅ HTML TEMPLATE
-        html = f"""
-<html>
-<head>
-<style>
-
-@page {{
-    size: A4;
-    margin: 0;
-}}
-
-body {{
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #222;
-}}
-
-.main {{
-    width: 794px;
-    height: 1123px;
-}}
-
-.header {{
-    background: #cfcfcf;
-    text-align: center;
-    padding: 18px;
-    font-size: 26px;
-    font-weight: bold;
-    letter-spacing: 2px;
-}}
-
-.container {{
-    display: table;
-    width: 100%;
-    height: 100%;
-    table-layout: fixed;
-}}
-
-.left {{
-    display: table-cell;
-    width: 32%;
-    background: #efefef;
-    padding: 18px;
-    vertical-align: top;
-}}
-
-.right {{
-    display: table-cell;
-    width: 68%;
-    padding: 18px 22px;
-    vertical-align: top;
-}}
-
-.section-title {{
-    font-weight: bold;
-    font-size: 13px;
-    border-bottom: 2px solid #333;
-    margin-top: 14px;
-    margin-bottom: 6px;
-    letter-spacing: 1px;
-}}
-
-p {{
-    margin: 3px 0;
-    font-size: 12.5px;
-    line-height: 1.4;
-}}
-
-ul {{
-    margin: 4px 0;
-    padding-left: 14px;
-}}
-
-li {{
-    font-size: 12.5px;
-    margin-bottom: 3px;
-}}
-
-.title {{
-    font-weight: bold;
-    font-size: 13px;
-}}
-
-.sub {{
-    font-size: 12.5px;
-}}
-
-.small-gap {{
-    margin-bottom: 6px;
-}}
-
-</style>
-</head>
-
-<body>
-
-<div class="main">
-
-<div class="header">
-{data.get('name', '')}
-</div>
-
-<div class="container">
-
-<!-- LEFT -->
-<div class="left">
-
-<div class="section-title">CONTACT DETAILS</div>
-<p>{data.get('phone', '')}</p>
-<p>{data.get('email', '')}</p>
-<p>{data.get('linkedin', '')}</p>
-<p>{data.get('github', '')}</p>
-<p>{data.get('portfolio', '')}</p>
-
-<div class="section-title">LANGUAGES</div>
-{''.join([f"<p>{l}</p>" for l in data.get('languages', [])])}
-
-<div class="section-title">SKILLS</div>
-<ul>
-{''.join([f"<li>{s}</li>" for s in data.get('skills', [])])}
-</ul>
-
-<div class="section-title">HOBBIES</div>
-{''.join([f"<p>{h}</p>" for h in data.get('hobbies', [])])}
-
-<div class="section-title">STRENGTHS</div>
-<ul>
-{''.join([f"<li>{s}</li>" for s in data.get('strengths', [])])}
-</ul>
-
-</div>
-
-<!-- RIGHT -->
-<div class="right">
-
-<div class="section-title">CAREER OBJECTIVE</div>
-<p class="small-gap">{' '.join(data.get('summary', []))}</p>
-
-<div class="section-title">EDUCATION</div>
-{''.join([f"<p class='title'>{e}</p>" for e in data.get('education', [])])}
-
-<div class="section-title">INTERNSHIP EXPERIENCE</div>
-{''.join([f"<p>{e}</p>" for e in data.get('experience', [])])}
-
-<div class="section-title">PROJECT</div>
-{''.join([f"<p>{p}</p>" for p in data.get('projects', [])])}
-
-<div class="section-title">CERTIFICATIONS</div>
-<ul>
-{''.join([f"<li>{c}</li>" for c in data.get('certifications', [])])}
-</ul>
-
-</div>
-
-</div>
-
-</div>
-
-</body>
-</html>
-"""
-
         # ✅ PDF GENERATION (INSIDE FUNCTION)
-        pdf = pdfkit.from_string(html, False, configuration=config)
-
-        return HttpResponse(
-            pdf,
-            content_type='application/pdf',
-            headers={
-                'Content-Disposition': 'attachment; filename="resume.pdf"'
-            }
-        )
-    
+        
 
 class FindJobsView(APIView):
 
@@ -501,8 +289,8 @@ class FindJobsView(APIView):
         url = "https://api.adzuna.com/v1/api/jobs/in/search/1"
 
         params = {
-            "app_id": "695ea0cb",
-            "app_key": "8051c317c49d675e38ba16ca72e91922",
+            "app_id": os.getenv("ADZUNA_APP_ID"),
+             "app_key": os.getenv("ADZUNA_APP_KEY"),
             "what": query,
             "results_per_page": 4
         }
@@ -572,8 +360,7 @@ class UserListView(APIView):
 
     def get(self, request):
 
-        print("USER:", request.user)
-        print("AUTH:", request.auth)
+        
 
         # ❌ TEMP REMOVE THIS (for debugging)
         # if not request.user.is_superuser:
@@ -697,6 +484,42 @@ def evaluate_answer(request):
         messages=[{"role": "user", "content": prompt}],
     )
 
-    result = json.loads(response.choices[0].message.content)
+    try:
+        result = json.loads(response.choices[0].message.content)
+    except:
+        return Response({"error": "Invalid AI response"}, status=500)
 
     return Response(result)
+
+
+
+
+
+# ADD THIS NEW CLASS AT THE BOTTOM
+@method_decorator(csrf_exempt, name='dispatch')
+class CreateResumePDFView(APIView):
+    """
+    Generates a PDF resume from React data.
+    """
+    def post(self, request):
+        try:
+            # 1. Get Data
+            incoming_data = request.data
+            resume_data = incoming_data.get('data', incoming_data)
+
+            # 2. Render HTML Template
+            # Django looks for 'resume_template.html' in the templates folder
+            html_string = render_to_string('resume_template.html', {'data': resume_data})
+
+            # 3. Generate PDF
+            html = HTML(string=html_string, base_url=request.build_absolute_uri())
+            pdf_file = html.write_pdf()
+
+            # 4. Return Response
+            response = HttpResponse(pdf_file, content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment; filename="My_Resume.pdf"'
+            return response
+
+        except Exception as e:
+            print(f"PDF Generation Error: {e}")
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

@@ -11,7 +11,8 @@ export default function Navbar() {
   const location = useLocation();
 
   const [activeSection, setActiveSection] = useState("home");
-  const [menuOpen, setMenuOpen] = useState(false); // ✅ FIX ADDED
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   // ✅ HIDE NAVBAR FOR ADMIN
   if (location.pathname.startsWith("/admin")) {
@@ -62,83 +63,90 @@ export default function Navbar() {
     return () => window.removeEventListener("click", handleClick);
   }, [menuOpen]);
 
+  // ✅ TRACK SCROLL FOR GLASS EFFECT
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 30);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <div className="navbar-wrapper">
+    <div className="nav-wrapper">
 
-      <nav className="navbar">
-        <div className="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+      {/* Background blur layer */}
+      <div className={`nav-blur-layer ${scrolled ? "nav-blur-active" : ""}`} />
 
-          {/* LEFT */}
-          <div className="flex items-center gap-2 brand">
-            <img src={logo} alt="Smart Resume Builder" className="w-10 h-10" />
-            <span className="text-lg font-bold brand-text">
+      <nav className={`nav-glass ${scrolled ? "nav-scrolled" : ""} ${menuOpen ? "nav-menu-open" : ""}`}>
+        <div className="nav-inner-container">
+
+          {/* ── BRAND ── */}
+          <div className="nav-brand" onClick={() => scrollToSection("home")}>
+            <div className="nav-logo-ring">
+              <img src={logo} alt="Smart Resume Builder" className="nav-logo-img" />
+            </div>
+            <span className="nav-brand-text">
               Instant Resume Builder
             </span>
           </div>
 
-          {/* CENTER (DESKTOP ONLY) */}
-          <div className="hidden md:flex gap-8 font-medium">
-            <span
-              className={`nav-link ${activeSection === "home" ? "active-nav" : ""}`}
-              onClick={() => scrollToSection("home")}
-            >
-              Home
-            </span>
-
-            <span
-              className={`nav-link ${activeSection === "about" ? "active-nav" : ""}`}
-              onClick={() => scrollToSection("about")}
-            >
-              About
-            </span>
-
-            <span
-              className={`nav-link ${activeSection === "build-resume" ? "active-nav" : ""}`}
-              onClick={() => scrollToSection("build-resume")}
-            >
-              Build Resume
-            </span>
-
-            <span
-              className={`nav-link ${activeSection === "contact" ? "active-nav" : ""}`}
-              onClick={() => scrollToSection("contact")}
-            >
-              Contact
-            </span>
+          {/* ── CENTER LINKS (DESKTOP) ── */}
+          <div className="nav-links-desktop">
+            {[
+              { id: "home", label: "Home" },
+              { id: "about", label: "About" },
+              { id: "build-resume", label: "Build Resume" },
+              { id: "contact", label: "Contact" },
+            ].map((item) => (
+              <span
+                key={item.id}
+                className={`nav-item ${activeSection === item.id ? "nav-item-active" : ""}`}
+                onClick={() => scrollToSection(item.id)}
+              >
+                {item.label}
+                {activeSection === item.id && <span className="nav-item-glow" />}
+              </span>
+            ))}
           </div>
 
-          {/* RIGHT */}
-          <div className="flex items-center gap-3">
+          {/* ── RIGHT SIDE ── */}
+          <div className="nav-right-section">
 
-            {/* ✅ MOBILE HAMBURGER */}
-            <div className="md:hidden">
-              <button
-                onClick={(e) => {
-                  e.stopPropagation(); // prevent auto close
-                  setMenuOpen(!menuOpen);
-                }}
-                className="hamburger"
-              >
-                ☰
-              </button>
-            </div>
+            {/* HAMBURGER (MOBILE) */}
+            <button
+              className={`nav-hamburger ${menuOpen ? "nav-hamburger-open" : ""}`}
+              onClick={(e) => {
+                e.stopPropagation();
+                setMenuOpen(!menuOpen);
+              }}
+              aria-label="Toggle menu"
+            >
+              <span />
+              <span />
+              <span />
+            </button>
 
-            {/* DESKTOP AUTH */}
+            {/* AUTH BUTTONS (DESKTOP) */}
             {!user ? (
-              <div className="hidden md:flex gap-4">
-                <Link to="/login" className="px-4 py-2 rounded-full border btn-outline">
+              <div className="nav-auth-desktop">
+                <Link to="/login" className="nav-btn-ghost">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
                   Login
                 </Link>
-                <Link to="/signup" className="px-4 py-2 rounded-full btn-solid">
+                <Link to="/signup" className="nav-btn-primary">
                   Sign Up
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
                 </Link>
               </div>
             ) : (
-              <div className="hidden md:flex items-center gap-4">
-                <span className="font-medium hello-text">
-                  Hello, <span className="username">{user.first_name}</span>
+              <div className="nav-user-desktop">
+                <div className="nav-user-avatar">
+                  {user.first_name?.[0]?.toUpperCase() || "U"}
+                </div>
+                <span className="nav-user-greet">
+                  Hello, <span className="nav-user-name">{user.first_name}</span>
                 </span>
-                <button onClick={logout} className="px-4 py-2 rounded-full btn-solid">
+                <button onClick={logout} className="nav-btn-logout">
+                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                   Logout
                 </button>
               </div>
@@ -147,30 +155,55 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* ✅ MOBILE MENU (CORRECT POSITION) */}
-        {menuOpen && (
-          <div
-            className="mobile-menu"
-            onClick={(e) => e.stopPropagation()} // prevent close inside click
-          >
-            <span onClick={() => { scrollToSection("home"); setMenuOpen(false); }}>Home</span>
-            <span onClick={() => { scrollToSection("about"); setMenuOpen(false); }}>About</span>
-            <span onClick={() => { scrollToSection("build-resume"); setMenuOpen(false); }}>Build Resume</span>
-            <span onClick={() => { scrollToSection("contact"); setMenuOpen(false); }}>Contact</span>
+        {/* ── MOBILE MENU ── */}
+        <div className={`nav-mobile-panel ${menuOpen ? "nav-mobile-visible" : ""}`}>
+          <div className="nav-mobile-inner" onClick={(e) => e.stopPropagation()}>
+            <div className="nav-mobile-links">
+              {[
+                { id: "home", label: "Home" },
+                { id: "about", label: "About" },
+                { id: "build-resume", label: "Build Resume" },
+                { id: "contact", label: "Contact" },
+              ].map((item) => (
+                <span
+                  key={item.id}
+                  className={`nav-mobile-item ${activeSection === item.id ? "nav-mobile-item-active" : ""}`}
+                  onClick={() => { scrollToSection(item.id); setMenuOpen(false); }}
+                >
+                  {item.label}
+                </span>
+              ))}
+            </div>
+
+            <div className="nav-mobile-divider" />
 
             {!user ? (
-              <>
-                <Link to="/login" onClick={() => setMenuOpen(false)}>Login</Link>
-                <Link to="/signup" onClick={() => setMenuOpen(false)}>Sign Up</Link>
-              </>
+              <div className="nav-mobile-auth">
+                <Link to="/login" onClick={() => setMenuOpen(false)} className="nav-mobile-login">
+                  Login
+                </Link>
+                <Link to="/signup" onClick={() => setMenuOpen(false)} className="nav-mobile-signup">
+                  Sign Up
+                </Link>
+              </div>
             ) : (
-              <>
-                <span>Hello, {user.first_name}</span>
-                <button onClick={() => { logout(); setMenuOpen(false); }}>Logout</button>
-              </>
+              <div className="nav-mobile-auth">
+                <div className="nav-mobile-user-info">
+                  <div className="nav-mobile-avatar">
+                    {user.first_name?.[0]?.toUpperCase() || "U"}
+                  </div>
+                  <span>Hello, {user.first_name}</span>
+                </div>
+                <button
+                  onClick={() => { logout(); setMenuOpen(false); }}
+                  className="nav-mobile-logout"
+                >
+                  Logout
+                </button>
+              </div>
             )}
           </div>
-        )}
+        </div>
 
       </nav>
     </div>
